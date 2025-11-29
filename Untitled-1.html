@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Özür Dilerim 💖</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: white;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .heart {
+            color: #d63031;
+            font-size: 60px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin: 15px 0;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        .message {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            margin: 15px 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .buttons {
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        #evetBtn {
+            background: white;
+            color: #ff6b6b;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        #hayirBtn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        /* Küçük hayır butonu */
+        .kucuk-hayir {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            cursor: pointer;
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 100;
+        }
+
+        button {
+            touch-action: manipulation;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            padding: 0 10px;
+        }
+
+        .message-text {
+            font-size: 1.1em;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
+        /* Mobil için responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .heart {
+                font-size: 50px;
+            }
+            
+            .message {
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            #evetBtn, #hayirBtn {
+                width: 100%;
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .message-text {
+                font-size: 1em;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .heart {
+                font-size: 40px;
+            }
+            
+            h1 {
+                font-size: 1.3em;
+            }
+            
+            .message-text {
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart">❤️</div>
+    
+    <div class="message">
+        <div class="message-text">Özür dilerim, affettin mi?</div>
+    </div>
+
+    <div class="buttons">
+        <button id="evetBtn">💖 EVET</button>
+        <button id="hayirBtn">HAYIR</button>
+    </div>
+
+    <script>
+        let hayirSayaci = 0;
+        const mesajlar = [
+            "Özür dilerim, affettin mi?",
+            "Bak lütfen, gerçekten çok üzgünüm.",
+            "Sensiz yapamıyorum, affet beni olur mu?",
+            "Yaptığımın farkındayım, çok pişmanım.",
+            "Bir şans daha ver, söz telafi edeceğim!",
+            "Dünyanın en güzel insanı, affet beni 🥺",
+            "Bensiz hayat daha güzel olamaz 😅",
+            "Lütfen, bana küsmeyeceğini söyle.",
+            "Her şeyim sensin, affet beni!",
+            "Bir bakışına dünyaları değişmem.",
+            "Pes ediyorum, ne desen haklısın. Affettin mi?"
+        ];
+
+        // Butonlara event listener ekle
+        document.getElementById('hayirBtn').addEventListener('click', hayiraBas);
+        document.getElementById('evetBtn').addEventListener('click', affet);
+
+        function hayiraBas() {
+            const hayirBtn = document.getElementById('hayirBtn');
+            const messageText = document.querySelector('.message-text');
+            const buttonsDiv = document.querySelector('.buttons');
+            
+            // Butonu küçült
+            const mevcutPadding = parseInt(window.getComputedStyle(hayirBtn).padding);
+            const mevcutFontSize = parseInt(window.getComputedStyle(hayirBtn).fontSize);
+            
+            if (mevcutPadding > 8) {
+                hayirBtn.style.padding = `${mevcutPadding - 2}px ${mevcutPadding * 2 - 4}px`;
+                if (mevcutFontSize > 12) {
+                    hayirBtn.style.fontSize = `${mevcutFontSize - 1}px`;
+                }
+            }
+
+            // Mesajı değiştir (senin sırana göre)
+            hayirSayaci++;
+            if (hayirSayaci < mesajlar.length) {
+                messageText.textContent = mesajlar[hayirSayaci];
+                
+                // Son mesajda sadece EVET butonunu göster + küçük hayır
+                if (hayirSayaci === mesajlar.length - 1) {
+                    buttonsDiv.innerHTML = `
+                        <button id="evetBtn" style="padding: 20px 40px; font-size: 20px; width: 100%;">💖 EVET, AFFEDİYORUM 💖</button>
+                    `;
+                    document.getElementById('evetBtn').addEventListener('click', affet);
+                    
+                    // Küçük hayır butonunu ekle
+                    const kucukHayir = document.createElement('button');
+                    kucukHayir.className = 'kucuk-hayir';
+                    kucukHayir.textContent = 'HAYIR';
+                    kucukHayir.addEventListener('click', siyahEkran);
+                    document.body.appendChild(kucukHayir);
+                }
+            }
+
+            // Renk değişimi - gradient koyulaşsın
+            document.body.style.background = `linear-gradient(135deg, #ff6b6b 0%, #${(200 - hayirSayaci * 10).toString(16).padStart(2, '0')}${(100 - hayirSayaci * 5).toString(16).padStart(2, '0')}${(100 - hayirSayaci * 5).toString(16).padStart(2, '0')} 100%)`;
+        }
+
+        function affet() {
+            document.body.innerHTML = `
+                <div style="text-align: center; padding: 20px; width: 100%; max-width: 400px;">
+                    <div class="heart">💖</div>
+                    <h1>Teşekkür Ederim! 🥰</h1>
+                    <p>Beni affettiğin için çok mutluyum!</p>
+                    <p>Seni seviyorum! 💕</p>
+                </div>
+            `;
+            
+            // Kalp animasyonunu yeniden başlat
+            const style = document.createElement('style');
+            style.textContent = `
+                .heart {
+                    color: #d63031;
+                    font-size: 60px;
+                    animation: heartbeat 1.5s ease-in-out infinite;
+                    margin: 15px 0;
+                }
+                @keyframes heartbeat {
+                    0% { transform: scale(1); }
+                    25% { transform: scale(1.1); }
+                    50% { transform: scale(1); }
+                    75% { transform: scale(0.9); }
+                    100% { transform: scale(1); }
+                }
+                body {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function siyahEkran() {
+            // Tüm body'yi siyah yap
+            document.body.style.background = '#000000';
+            document.body.style.color = '#000000';
+            document.body.innerHTML = '';
+            document.body.style.padding = '0';
+            document.body.style.margin = '0';
+            document.body.style.display = 'flex';
+            document.body.style.justifyContent = 'center';
+            document.body.style.alignItems = 'center';
+            document.body.style.minHeight = '100vh';
+        }
+    </script>
+</body>
+</html>
